@@ -83,44 +83,51 @@ public class Screen extends Applet{
             Font font = new Font("Arial",Font.ITALIC,20);
             g.setFont(font);
             
-            g.setColor(Color.BLUE);
-            
             label.setText("Now you can drag and drop vertexes");
+                
             
-            Color cl= new Color(126,249,255);    
-            
-            
+
             int x1[],y1[];
             x1= new int[click_no];
             y1= new int[click_no];
             for(int i=0;i<click_no;i++){
                 x1[i]=points.get(i).getX();
                 y1[i]=points.get(i).getY();
-                g.drawString(Integer.toString(i+1), x1[i]-4, y1[i]-4);
             }
             g.setColor(Color.WHITE);
                 
             Graphics2D g2 = (Graphics2D) g;    
             g2.setStroke(new BasicStroke(2));
             g2.fillPolygon(x1,y1,click_no);
+            
+            g.setColor(new Color(255,255,185));
+            for(int i=0;i<click_no;i++){
+    
+                g.fillOval(points.get(i).getX()-10,points.get(i).getY()-10,20,20);
+  
+            }
+            g2.setStroke(new BasicStroke(1));
+            g.setColor(new Color(255,0,0));
+            for(int i=0;i<click_no;i++){
+    
+                g.drawOval(points.get(i).getX()-10,points.get(i).getY()-10,20,20);
+  
+            }
+            g2.setStroke(new BasicStroke(2));
+            
             g2.setColor(new Color(26,148,149));
             g2.drawPolygon(x1,y1,click_no);
             
-            g.setColor(Color.BLUE);
+            g2.setColor(Color.BLUE);
             
             for(int i=0;i<click_no;i++){
-                g.drawString(Integer.toString(i+1), x1[i]-4, y1[i]-4);
+                g2.drawString(Integer.toString(i+1), x1[i]-8, y1[i]-8);
             }
             
         }
         
         else if(this.click_no==0){
             
-            Font font = new Font("Arial",Font.ITALIC,20);
-            
-            g.setFont(font);
-            
-            g.setColor(Color.BLUE);
             
             label.setText("Click on Screen For First Point Of Polygon");
             
@@ -129,27 +136,37 @@ public class Screen extends Applet{
         
         else if(this.click_no==1){
             
-            Font font = new Font("Arial",Font.ITALIC,20);
-            
-            g.setFont(font);
-            g.setColor(Color.BLUE);
             label.setText("Click on Screen For Second Point Of Polygon");
             
-            g.setColor(new Color(26,148,149));
+            g.setColor(new Color(255,255,185));
+            g.fillOval(points.get(click_no-1).getX()-10,points.get(click_no-1).getY()-10 , 20, 20);
             
-            g.fillOval(points.get(click_no-1).getX()-4,points.get(click_no-1).getY()-4-4,4,4);
+            g.setColor(new Color(255,0,0));
+            g.drawOval(points.get(click_no-1).getX()-10,points.get(click_no-1).getY()-10 , 20, 20);
+            
+            g.setColor(new Color(26,148,149));
+            g.fillOval(points.get(click_no-1).getX()-2,points.get(click_no-1).getY()-2,4,4);
 
             
         }
         else{
             
-            Font font = new Font("Arial",Font.ITALIC,20);
-            g.setFont(font);
-            g.setColor(Color.BLUE);
-            
             label.setText("Click on Screen For Next Point Of Polygon");
 
-                            
+            
+            g.setColor(new Color(255,255,185));
+            for(int i=0;i<click_no;i++){
+    
+                g.fillOval(points.get(i).getX()-10,points.get(i).getY()-10,20,20);
+  
+            }
+            g.setColor(new Color(255,0,0));
+            for(int i=0;i<click_no;i++){
+    
+                g.drawOval(points.get(i).getX()-10,points.get(i).getY()-10,20,20);
+  
+            }
+            
             g.setColor(new Color(26,148,149));
                 
             Graphics2D g2 = (Graphics2D) g;
