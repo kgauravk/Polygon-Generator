@@ -64,7 +64,6 @@ public class Screen extends Applet{
     }
     
     public void setShape(){
-        System.out.println("here ");
         this.setD(true);
         this.shape = new Shape(points);
         this.click_no=points.size();
@@ -201,13 +200,25 @@ public class Screen extends Applet{
         public void mouseClicked(MouseEvent e) {
             if(!done){
                 if(points.size()!=0)
-                if(points.get(0).getDistance(new Point(e.getX(),e.getY()))<=13&&points.size()>2){
-                    setShape();
-                    return;
-                }else if(points.get(0).getDistance(new Point(e.getX(),e.getY()))<=13){
-                    JOptionPane.showMessageDialog(app, "First create at least 3 points!!");
-                    return;
-                }
+                for(int i=0;i<click_no;i++){
+                        if(points.get(i).getDistance(new Point(e.getX(),e.getY()))<=13&&points.size()>2){
+                            if(points.size()-i>2){
+                                for(int j=0;j<i;j++){
+                                    points.remove(0);
+                                }
+                                setShape();
+                            }
+                            else
+                                JOptionPane.showMessageDialog(app, "Polygon must have at least 3 points");
+                            return;
+                        }
+                        else if(points.get(i).getDistance(new Point(e.getX(),e.getY()))<=13){
+                            JOptionPane.showMessageDialog(app, "First create at least 3 points!!");
+                            return;
+                        }
+                        
+                    }
+                
                 
                 click_no++;
                 points.add(new Point(e.getX(),e.getY()));
