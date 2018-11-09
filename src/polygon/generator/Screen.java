@@ -75,6 +75,26 @@ public class Screen extends Applet{
         
     }
     
+    private void drawCircles(Graphics g){
+        
+            g.setColor(new Color(255,255,185));
+            for(int i=0;i<click_no;i++){
+    
+                g.fillOval(points.get(i).getX()-10,points.get(i).getY()-10,20,20);
+  
+            }
+            Graphics2D g2 = (Graphics2D) g;    
+            g2.setStroke(new BasicStroke(1));
+            
+            g.setColor(new Color(255,0,0));
+            for(int i=0;i<click_no;i++){
+    
+                g.drawOval(points.get(i).getX()-10,points.get(i).getY()-10,20,20);
+  
+            }
+        
+    }
+    
     @Override
     public void paint(Graphics g){
         
@@ -100,19 +120,8 @@ public class Screen extends Applet{
             g2.setStroke(new BasicStroke(2));
             g2.fillPolygon(x1,y1,click_no);
             
-            g.setColor(new Color(255,255,185));
-            for(int i=0;i<click_no;i++){
-    
-                g.fillOval(points.get(i).getX()-10,points.get(i).getY()-10,20,20);
-  
-            }
-            g2.setStroke(new BasicStroke(1));
-            g.setColor(new Color(255,0,0));
-            for(int i=0;i<click_no;i++){
-    
-                g.drawOval(points.get(i).getX()-10,points.get(i).getY()-10,20,20);
-  
-            }
+            this.drawCircles(g); 
+            
             g2.setStroke(new BasicStroke(2));
             
             g2.setColor(new Color(26,148,149));
@@ -153,20 +162,7 @@ public class Screen extends Applet{
             
             label.setText("Click on Screen For Next Point Of Polygon");
 
-            
-            g.setColor(new Color(255,255,185));
-            for(int i=0;i<click_no;i++){
-    
-                g.fillOval(points.get(i).getX()-10,points.get(i).getY()-10,20,20);
-  
-            }
-            g.setColor(new Color(255,0,0));
-            for(int i=0;i<click_no;i++){
-    
-                g.drawOval(points.get(i).getX()-10,points.get(i).getY()-10,20,20);
-  
-            }
-            
+            this.drawCircles(g);
             g.setColor(new Color(26,148,149));
                 
             Graphics2D g2 = (Graphics2D) g;
