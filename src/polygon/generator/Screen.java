@@ -24,6 +24,7 @@ public class Screen extends Applet{
     private JLabel label;
 
     private ArrayList <Point> points;
+    private Shape shape;
     
     Screen(JLabel label){
         
@@ -57,8 +58,21 @@ public class Screen extends Applet{
         this.done=t;
     }
     
-    public void clear(){
         
+    public Shape getShape(){
+       return shape;
+    }
+    
+    public void setShape(){
+        System.out.println("here ");
+        this.setD(true);
+        this.shape = new Shape(points);
+        this.click_no=points.size();
+        this.repaint();
+    }
+    
+    public void clear(){
+        this.shape=null;
         this.click_no=0;
         this.done=false;
         points.clear();
@@ -66,11 +80,13 @@ public class Screen extends Applet{
         
     }
     
-    public void drawShape(Shape s){
+    public void setShape(Shape s){
         
-        this.points= s.getPoints();
+        if(s.getNoVer()<=2) return; 
+        this.done=true;
         this.click_no=s.getNoVer();
-        if(click_no>2) this.done=true;
+        this.shape=s;
+        this.points=s.getPoints();
         this.repaint();
         
     }
@@ -108,12 +124,8 @@ public class Screen extends Applet{
             
 
             int x1[],y1[];
-            x1= new int[click_no];
-            y1= new int[click_no];
-            for(int i=0;i<click_no;i++){
-                x1[i]=points.get(i).getX();
-                y1[i]=points.get(i).getY();
-            }
+            x1= shape.getXArray();
+            y1= shape.getYArray();
             g.setColor(Color.WHITE);
                 
             Graphics2D g2 = (Graphics2D) g;    
@@ -188,6 +200,14 @@ public class Screen extends Applet{
         @Override
         public void mouseClicked(MouseEvent e) {
             if(!done){
+                if(points.size()!=0)
+                if(points.get(0).getDistance(new Point(e.getX(),e.getY()))<=13&&points.size()>2){
+                    setShape();
+                    return;
+                }else if(points.get(0).getDistance(new Point(e.getX(),e.getY()))<=13){
+                    JOptionPane.showMessageDialog(app, "First create at least 3 points!!");
+                    return;
+                }
                 
                 click_no++;
                 points.add(new Point(e.getX(),e.getY()));

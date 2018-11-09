@@ -18,6 +18,24 @@ Shape(ArrayList<Point> arr1)
 }
 
 
+public int[] getXArray(){
+    int x[]=new int[points.size()];
+    
+    for(int i=0;i<points.size();i++){
+        x[i]=points.get(i).getX();
+    }
+    return x;
+}
+
+public int[] getYArray(){
+    int y[]=new int[points.size()];
+    
+    for(int i=0;i<points.size();i++){
+        y[i]=points.get(i).getY();
+    }
+    return y;
+}
+
 public void setPoint(Point p)
 {
 	points.add(p);

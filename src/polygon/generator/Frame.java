@@ -21,10 +21,9 @@ import javax.swing.*;
 public class Frame extends JFrame{
     
     private Screen app;
-    private JButton done,info,clear;
+    private JButton info,clear;
     private JFrame frame;
     private JLabel label;
-    private Shape shape;
     
     Frame(){
         frame= this;
@@ -44,23 +43,18 @@ public class Frame extends JFrame{
         this.add(app);
         
         JPanel panel = new JPanel();
-        done=new JButton("Done");
-        
-        done.setFont(font);
         
         info=new JButton("Get Info");
         info.setFont(font);
         
         clear=new JButton("Clear");
         clear.setFont(font);
-        
-        panel.add(done);
+    
         panel.add(info);
         panel.add(clear);
         panel.setBackground(new Color(255,153,153));
         
         this.add(panel,BorderLayout.SOUTH);
-        done.addActionListener(new ListenForDone());
         info.addActionListener(new ListenForInfo());
         clear.addActionListener(new ListenForClear());
         
@@ -68,49 +62,13 @@ public class Frame extends JFrame{
         this.setTitle("Polygon Generator");
         
     }
-    
-    public Shape getS(){
-       return shape;
-    }
-    
-    public void setShape(Shape s){
-        
-        this.shape = s;
-        app.drawShape(s);
-        
-    }
-    
-    private class ListenForDone implements ActionListener{
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            
-            if(e.getSource()==done){
-                
-                int c= app.getN();
-                if(c<3){
-                    JOptionPane.showMessageDialog(frame,"At least 3 points are required to display a polygon");
-                    return;
-                }
-                if(!app.getD()){
-                    shape = new Shape(app.getPoints());
-                    app.setD(true);
-                    app.repaint();
-                }
-            }
-
-        }
-        
-        
-    }
-    
     private class ListenForClear implements ActionListener{
 
         @Override
         public void actionPerformed(ActionEvent e) {
             
             if(e.getSource()==clear){
-                shape=null;
                 app.clear();
             }
             
@@ -134,7 +92,7 @@ public class Frame extends JFrame{
                 
                 else{
                     
-                    String str=shape.getString();                  
+                    String str=app.getShape().getString();                  
                     JOptionPane.showMessageDialog(frame, str);                    
                     
                 }

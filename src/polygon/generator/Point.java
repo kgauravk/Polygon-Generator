@@ -34,8 +34,7 @@ public double getDistance(Point p)
 	d1=(int)Math.pow(d1,2);
 	int d2=p.getY()-y;
 	d2=(int)Math.pow(d2,2);
-	int d3=d2-d1;
-	Math.abs(d3);
+	int d3=d2+d1;
 	double d;
 	d=Math.sqrt(d3);
 	return d;
