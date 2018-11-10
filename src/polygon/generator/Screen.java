@@ -203,10 +203,16 @@ public class Screen extends Applet{
         public void mouseClicked(MouseEvent e) {
             if(e.getButton()==1)
             if(!done){
+                Point p= new Point(e.getX(),e.getY());
                 if(points.size()!=0)
                 for(int i=0;i<click_no;i++){
                         if(points.get(i).getDistance(new Point(e.getX(),e.getY()))<=12&&points.size()>2){
                             if(points.size()-i>2){
+                                for(int j=i+1; j<click_no-2;j++)
+                                    if(Line.isInInter(points.get(j), points.get(j+1), points.get(click_no-1), p)){
+                                        JOptionPane.showMessageDialog(app, "Sides of Polygons can't intersect!!");
+                                        return;
+                                    }      
                                 for(int j=0;j<i;j++){
                                     points.remove(0);
                                 }
@@ -221,11 +227,17 @@ public class Screen extends Applet{
                             return;
                         }
                         
-                    }
+                }
                 
+                if(points.size()>2)
+                    for(int i=0; i<click_no-2;i++)
+                        if(Line.isInInter(points.get(i), points.get(i+1), points.get(click_no-1), p)){
+                            JOptionPane.showMessageDialog(app, "Sides of Polygons can't intersect!!");
+                            return;
+                        }
                 
                 click_no++;
-                points.add(new Point(e.getX(),e.getY()));
+                points.add(p);
                 repaint();
             }
             
