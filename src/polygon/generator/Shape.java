@@ -67,7 +67,7 @@ public double getArea()
 	{
 		sum2=sum2+(lines.get(i).getpoint1().getY()*lines.get(i).getpoint2().getX());
 	}
-   return (sum1+sum2)/2.0;
+   return Math.abs(sum1-sum2)/2.0;
 }
 
 public String getString()

@@ -9,6 +9,7 @@ import java.applet.Applet;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.util.*;
 import javax.swing.*;
 
@@ -22,6 +23,7 @@ public class Screen extends Applet{
     private int click_no;
     private boolean done;
     private JLabel label;
+    private int drag_started;
 
     private ArrayList <Point> points;
     private Shape shape;
@@ -32,7 +34,7 @@ public class Screen extends Applet{
         app=this;
         done=false;
         this.click_no=0;
-        
+        this.drag_started=-1;
         points = new ArrayList<>();
 
         Color col = new Color(224,255,255);
@@ -40,6 +42,7 @@ public class Screen extends Applet{
         app.setBackground(col);
         app.setVisible(true);
         app.addMouseListener(new ListenForMouse());
+        app.addMouseMotionListener(new ListenForMouseDrag());
         
         
     }
@@ -198,10 +201,11 @@ public class Screen extends Applet{
 
         @Override
         public void mouseClicked(MouseEvent e) {
+            if(e.getButton()==1)
             if(!done){
                 if(points.size()!=0)
                 for(int i=0;i<click_no;i++){
-                        if(points.get(i).getDistance(new Point(e.getX(),e.getY()))<=13&&points.size()>2){
+                        if(points.get(i).getDistance(new Point(e.getX(),e.getY()))<=12&&points.size()>2){
                             if(points.size()-i>2){
                                 for(int j=0;j<i;j++){
                                     points.remove(0);
@@ -212,7 +216,7 @@ public class Screen extends Applet{
                                 JOptionPane.showMessageDialog(app, "Polygon must have at least 3 points");
                             return;
                         }
-                        else if(points.get(i).getDistance(new Point(e.getX(),e.getY()))<=13){
+                        else if(points.get(i).getDistance(new Point(e.getX(),e.getY()))<=12){
                             JOptionPane.showMessageDialog(app, "First create at least 3 points!!");
                             return;
                         }
@@ -229,10 +233,24 @@ public class Screen extends Applet{
 
         @Override
         public void mousePressed(MouseEvent e) {
+            
+            if(e.getButton()==1)
+            if(done)
+            for(int i=0;i<click_no;i++){
+                if(points.get(i).getDistance(new Point(e.getX(),e.getY()))<=12){
+                    drag_started=i;
+                    points.get(i).setX(e.getX());
+                    points.get(i).setY(e.getY());
+                    repaint();
+                    break;
+                }
+            }
+            
         }
 
         @Override
         public void mouseReleased(MouseEvent e) {
+            drag_started=-1;
         }
 
         @Override
@@ -244,6 +262,24 @@ public class Screen extends Applet{
         }
         
         
+        
+    }
+    
+    private class ListenForMouseDrag implements MouseMotionListener{
+
+        @Override
+        public void mouseDragged(MouseEvent e) {
+            
+                if(done)
+                    if(drag_started!=-1){
+                        points.get(drag_started).setX(e.getX());
+                        points.get(drag_started).setY(e.getY());
+                        repaint();
+                    }
+        }
+
+        @Override
+        public void mouseMoved(MouseEvent e) {}
         
     }
     
